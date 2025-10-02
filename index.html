@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Get Coins</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
         * {
             margin: 0;
@@ -52,25 +53,11 @@
 
         .secure-badge {
             background-color: #fff;
-            padding: 8px 20px;
+            padding: 4px 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-size: 13px;
-            color: #00c9a7;
             border-bottom: 1px solid #e8e8e8;
-        }
-
-        .secure-badge::before {
-            content: "🔒";
-            font-size: 12px;
-        }
-
-        .secure-badge::after {
-            content: "›";
-            font-size: 16px;
-            margin-left: 2px;
         }
 
         .user-section {
@@ -86,7 +73,9 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: url('./avt.png') no-repeat center/cover;
+            background-image: url('tx.png');
+            background-size: cover;
+            background-position: center;
             flex-shrink: 0;
         }
 
@@ -273,10 +262,11 @@
             font-size: 18px;
             color: #d0d0d0;
             font-weight: 700;
+            background-color: #f2f2f2;
         }
 
         .special-offer {
-            background-color: #fff;
+            background-color: #fafafa;
             padding: 16px 20px;
             border-top: 8px solid #f8f8f8;
         }
@@ -304,6 +294,7 @@
             flex-wrap: wrap;
             gap: 8px;
             align-items: center;
+            justify-content: center;
         }
 
         .payment-icon {
@@ -840,8 +831,8 @@
         }
 
         .success-coins {
-            font-weight: 600;
-            color: #161823;
+            font-weight: 400;
+            color: #666;
         }
 
         .success-note {
@@ -896,14 +887,14 @@
 
     <!-- Secure Payment Badge -->
     <div class="secure-badge">
-        Secure payment
+        <img src="Secure payment.png" alt="Secure payment" style="max-width: 45%; height: auto;">
     </div>
 
     <!-- User Section -->
     <div class="user-section">
         <div class="avatar"></div>
         <div class="user-info">
-            <input type="text" class="username-input" id="usernameInput" value="l0ykrn42y5" placeholder="输入用户名">
+            <input type="text" class="username-input" id="usernameInput" value="" placeholder="输入用户名">
         </div>
     </div>
 
@@ -917,23 +908,23 @@
 
         <div class="coin-options">
             <div class="coin-option selected" onclick="selectCoinOption(this, 30, 0.31)">
-                <div class="coin-amount">🪙30</div>
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">30</div>
                 <div class="coin-price">US$0.31</div>
             </div>
             <div class="coin-option" onclick="selectCoinOption(this, 350, 3.65)">
-                <div class="coin-amount">🪙350</div>
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">350</div>
                 <div class="coin-price">US$3.65</div>
             </div>
             <div class="coin-option" onclick="selectCoinOption(this, 700, 7.25)">
-                <div class="coin-amount">🪙700</div>
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">700</div>
                 <div class="coin-price">US$7.25</div>
             </div>
             <div class="coin-option" onclick="selectCoinOption(this, 1400, 14.49)">
-                <div class="coin-amount">🪙1,400</div>
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">1,400</div>
                 <div class="coin-price">US$14.49</div>
             </div>
             <div class="coin-option" onclick="selectCoinOption(this, 3500, 36.2)">
-                <div class="coin-amount">🪙3,500</div>
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">3,500</div>
                 <div class="coin-price">US$36.2</div>
             </div>
             <div class="coin-option" onclick="showCustomAmount()">
@@ -945,7 +936,7 @@
     <!-- Invite Section -->
     <div class="invite-section" onclick="showInviteRewards()">
         <div class="invite-content">
-            <div class="invite-icon">🤝🪙</div>
+            <div class="invite-icon"><img src="clapping.png" alt="clapping" style="width: 48px; height: 48px;"></div>
             <div class="invite-text">
                 <h3>Invite & Get Rewards</h3>
                 <p>Check out this new feature!</p>
@@ -958,13 +949,13 @@
     <div class="exchange-section" onclick="showExchange()">
         <div class="exchange-content">
             <div class="exchange-title">Exchange</div>
-            <div class="exchange-balance">LIVE Gifts balance: $0.00(🪙0)</div>
+            <div class="exchange-balance">LIVE Gifts balance: $0.00(<img src="coin.png" alt="coin" style="width: 20px; height: 20px; vertical-align: middle;">0)</div>
         </div>
         <span class="arrow-right">›</span>
     </div>
 
     <!-- TikTok Brand -->
-    <div class="tiktok-brand">♪ TikTok</div>
+    <div class="tiktok-brand"><img src="tiktok.png" alt="TikTok" style="max-width: 120px; height: auto;"></div>
 
     <!-- Special Offer -->
     <div class="special-offer">
@@ -973,48 +964,13 @@
             <span class="offer-cashback">Unlock 5% cashback ›</span>
         </div>
         <div class="payment-methods">
-            <div class="payment-icon">
-                <svg width="32" height="20" viewBox="0 0 32 20">
-                    <text x="2" y="14" font-size="12" fill="#1434CB" font-weight="bold">VISA</text>
-                </svg>
-            </div>
-            <div class="payment-icon">
-                <svg width="32" height="20" viewBox="0 0 32 20">
-                    <circle cx="11" cy="10" r="7" fill="#EB001B"/>
-                    <circle cx="21" cy="10" r="7" fill="#FF5F00" opacity="0.8"/>
-                </svg>
-            </div>
-            <div class="payment-icon">
-                <svg width="32" height="20" viewBox="0 0 32 20">
-                    <rect width="32" height="20" fill="#016FD0" rx="2"/>
-                </svg>
-            </div>
-            <div class="payment-icon">
-                <svg width="32" height="20" viewBox="0 0 32 20">
-                    <text x="4" y="14" font-size="10" fill="#0E4C96" font-weight="bold">JCB</text>
-                </svg>
-            </div>
-            <div class="payment-icon">
-                <svg width="32" height="20" viewBox="0 0 32 20">
-                    <circle cx="16" cy="10" r="8" fill="none" stroke="#0079BE" stroke-width="2"/>
-                </svg>
-            </div>
-            <div class="payment-icon">
-                <svg width="32" height="20" viewBox="0 0 32 20">
-                    <text x="2" y="14" font-size="8" fill="#003087" font-weight="bold">PayPal</text>
-                </svg>
-            </div>
-            <div class="payment-icon">
-                <svg width="32" height="20" viewBox="0 0 32 20">
-                    <path d="M16 4L12 16M20 4L16 16" stroke="#000" stroke-width="2"/>
-                </svg>
-            </div>
+            <img src="VISA.png" alt="Payment Methods" style="max-width: 80%; height: auto;">
         </div>
     </div>
 
     <!-- Buy Button -->
     <button class="buy-button" onclick="processPurchase()">
-        🛡️ Buy for US$<span id="buyPrice">0.31</span>
+        <img src="Shield.png" alt="shield" style="width: 24px; height: 24px; vertical-align: middle;"> Buy for US$<span id="buyPrice">0.31</span>
     </button>
 
     <!-- Custom Amount Modal -->
@@ -1038,7 +994,7 @@
                     <span style="font-size: 12px;">⌄</span>
                 </div>
                 <div class="coin-display">
-                    <span style="font-size: 24px;">🪙</span>
+                    <img src="coin.png" alt="coin" style="width: 32px; height: 32px; vertical-align: middle;">
                     <span class="coin-display-amount" id="modalCoinAmount">0</span>
                 </div>
                 <div class="price-display" id="modalPrice">US$0.00</div>
@@ -1079,7 +1035,7 @@
             </div>
 
             <button class="modal-recharge-btn" onclick="confirmCustomRecharge()">
-                🛡️ Recharge
+                <img src="Shield.png" alt="shield" style="width: 24px; height: 24px; vertical-align: middle;"> Recharge
             </button>
         </div>
     </div>
@@ -1136,9 +1092,7 @@
                 <div class="payment-option" onclick="selectPaymentMethod('applepay')">
                     <div class="payment-left">
                         <div class="payment-icon-wrapper">
-                            <svg width="32" height="18" viewBox="0 0 32 18" fill="none">
-                                <text x="0" y="14" font-size="12" fill="#000" font-weight="bold">aPay</text>
-                            </svg>
+                            <img src="apay.png" alt="Apple Pay" style="height: 16px; width: auto;">
                         </div>
                         <span class="payment-name">Apple Pay</span>
                     </div>
@@ -1148,10 +1102,7 @@
                 <div class="payment-option" onclick="selectPaymentMethod('paypal')">
                     <div class="payment-left">
                         <div class="payment-icon-wrapper">
-                            <svg width="24" height="18" viewBox="0 0 24 18" fill="#003087">
-                                <path d="M7 3h8c2.5 0 4 1.5 4 3.5S17.5 10 15 10H11l-1 5H8l2-12z"/>
-                                <path d="M9 6h6c1.5 0 2.5.8 2.5 2s-1 2-2.5 2h-3l-.5 3H10l1-7z" fill="#0079C1"/>
-                            </svg>
+                            <img src="paypal.png" alt="PayPal" style="height: 15px; width: auto;">
                         </div>
                         <span class="payment-name">PayPal</span>
                     </div>
@@ -1169,7 +1120,7 @@
                 <span class="order-total-amount" id="orderTotalPrice">US$312</span>
             </div>
             <button class="pay-now-btn" onclick="processPayment()">
-                🛡️ Pay now
+                <img src="Shield.png" alt="shield" style="width: 24px; height: 24px; vertical-align: middle;"> Pay now
             </button>
         </div>
     </div>
@@ -1463,7 +1414,7 @@
         }
 
         function showExchange() {
-            alert('兑换中心\n\nLIVE礼物余额: $0.00 (🪙0)\n\n您可以将金币兑换成LIVE礼物，或将LIVE礼物余额兑换成金币。');
+            alert('兑换中心\n\nLIVE礼物余额: $0.00 (coin 0)\n\n您可以将金币兑换成LIVE礼物，或将LIVE礼物余额兑换成金币。');
         }
 
         function processPurchase() {
