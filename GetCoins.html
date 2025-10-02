@@ -482,7 +482,7 @@
             background-color: #f1f1f2;
             border: none;
             border-radius: 8px;
-            padding: 20px;
+            padding: 12px 20px;
             font-size: 22px;
             font-weight: 600;
             cursor: pointer;
@@ -600,14 +600,12 @@
         }
 
         .secure-payment-badge {
-            background-color: #e8f8f5;
-            padding: 12px 20px;
+            background-color: #fff;
+            padding: 4px 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-size: 14px;
-            color: #00c9a7;
+            border-bottom: 1px solid #e8e8e8;
         }
 
         .order-content {
@@ -831,8 +829,8 @@
         }
 
         .success-coins {
-            font-weight: 400;
-            color: #000;
+            font-weight: inherit;
+            color: inherit;
         }
 
         .success-note {
@@ -894,7 +892,7 @@
     <div class="user-section">
         <div class="avatar"></div>
         <div class="user-info">
-            <input type="text" class="username-input" id="usernameInput" value="" placeholder="输入用户名">
+            <input type="text" class="username-input" id="usernameInput" value="" placeholder="Enter username">
         </div>
     </div>
 
@@ -1055,7 +1053,7 @@
         </div>
 
         <div class="secure-payment-badge">
-            🔒 Secure payment ›
+            <img src="Secure payment.png" alt="Secure payment" style="max-width: 45%; height: auto;">
         </div>
 
         <div class="order-content">
