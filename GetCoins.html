@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Get Coins</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: #161823;
+            max-width: 480px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .secure-badge {
+            background-color: #fff;
+            padding: 4px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .user-section {
+            background-color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 8px solid #f8f8f8;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-image: url('tx.png');
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .username-input {
+            width: 100%;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 6px 8px;
+            border: 2px solid #fe2c55;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .coin-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 4px;
+        }
+
+        .dropdown-icon {
+            color: #999;
+            font-size: 20px;
+        }
+
+        .recharge-section {
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        .recharge-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .recharge-note {
+            font-size: 13px;
+            color: #fe2c55;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .info-icon {
+            width: 14px;
+            height: 14px;
+            border: 1px solid #fe2c55;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .coin-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .coin-option {
+            background-color: #fff;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .coin-option:hover {
+            border-color: #fe2c55;
+        }
+
+        .coin-option.selected {
+            border-color: #fe2c55;
+            background-color: #fff5f7;
+        }
+
+        .coin-amount {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .coin-price {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .invite-section, .exchange-section {
+            background-color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e8e8e8;
+            cursor: pointer;
+        }
+
+        .invite-section {
+            border-top: 8px solid #f8f8f8;
+        }
+
+        .invite-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .invite-icon {
+            font-size: 36px;
+        }
+
+        .invite-text h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .invite-text p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .exchange-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .exchange-title {
+            font-size: 15px;
+            color: #666;
+        }
+
+        .exchange-balance {
+            font-size: 13px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .arrow-right {
+            font-size: 20px;
+            color: #c8c8c8;
+        }
+
+        .tiktok-brand {
+            text-align: center;
+            padding: 24px 20px;
+            font-size: 18px;
+            color: #d0d0d0;
+            font-weight: 700;
+            background-color: #f2f2f2;
+        }
+
+        .special-offer {
+            background-color: #fafafa;
+            padding: 16px 20px;
+            border-top: 8px solid #f8f8f8;
+        }
+
+        .offer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .offer-title {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .offer-cashback {
+            font-size: 14px;
+            color: #fe2c55;
+            font-weight: 600;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-icon {
+            height: 24px;
+            padding: 4px 8px;
+            background-color: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .buy-button {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #fe2c55;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .buy-button:active {
+            background-color: #e02849;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                max-width: 100%;
+            }
+
+            .coin-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .coin-option {
+                padding: 12px 8px;
+            }
+
+            .coin-amount {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .coin-amount {
+                font-size: 16px;
+            }
+
+            .coin-price {
+                font-size: 12px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .custom-modal {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 16px 16px 0 0;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .custom-modal.show {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e8e8e8;
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 10;
+        }
+
+        .modal-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .back-btn, .help-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #161823;
+        }
+
+        .modal-content {
+            padding: 20px;
+        }
+
+        .dropdown-section {
+            margin-bottom: 20px;
+        }
+
+        .dropdown-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .coin-display {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .coin-display-amount {
+            font-size: 28px;
+            font-weight: 700;
+            color: #161823;
+        }
+
+        .price-display {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .numpad-btn {
+            background-color: #f1f1f2;
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 22px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #161823;
+            transition: background-color 0.2s;
+        }
+
+        .numpad-btn:active {
+            background-color: #e4e4e5;
+        }
+
+        .numpad-btn.delete-btn {
+            font-size: 20px;
+        }
+
+        .offer-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-top: 1px solid #e8e8e8;
+            margin-bottom: 16px;
+        }
+
+        .offer-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .cashback-link {
+            font-size: 14px;
+            color: #fe2c55;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .total-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .total-amount {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-recharge-btn {
+            width: 100%;
+            background-color: #fe2c55;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-recharge-btn:active {
+            background-color: #e02849;
+        }
+
+        .modal-recharge-btn:disabled {
+            background-color: #ffb3c1;
+            cursor: not-allowed;
+        }
+
+        /* Order Summary Modal Styles */
+        .order-summary-modal {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #f8f8f8;
+            z-index: 1001;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .order-summary-modal.show {
+            transform: translateY(0);
+        }
+
+        .order-header {
+            background-color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8e8e8;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .order-header h2 {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .secure-payment-badge {
+            background-color: #e8f8f5;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #00c9a7;
+        }
+
+        .order-content {
+            padding: 20px;
+            padding-bottom: 200px;
+        }
+
+        .account-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .account-row, .purchase-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .purchase-row {
+            border-top: 1px solid #f1f1f2;
+            margin-top: 8px;
+            padding-top: 16px;
+        }
+
+        .account-label, .purchase-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .account-value {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .purchase-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .payment-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .payment-title {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 16px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid #f1f1f2;
+            cursor: pointer;
+        }
+
+        .payment-option:last-child {
+            border-bottom: none;
+        }
+
+        .payment-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .payment-icon-wrapper {
+            width: 28px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .payment-name {
+            font-size: 15px;
+            color: #161823;
+        }
+
+        .radio-btn {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #c8c8c8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .radio-btn.selected {
+            border-color: #fe2c55;
+        }
+
+        .radio-btn.selected::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #fe2c55;
+            border-radius: 50%;
+        }
+
+        .order-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 16px 20px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .agreement-text {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .order-total-amount {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .pay-now-btn {
+            width: 100%;
+            background-color: #fe2c55;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .pay-now-btn:active {
+            background-color: #e02849;
+        }
+
+        /* Success Modal Styles */
+        .success-modal {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #fff;
+            z-index: 1002;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .success-modal.show {
+            transform: translateY(0);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #e8f8f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #161823;
+            margin-bottom: 16px;
+        }
+
+        .success-message {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .success-coins {
+            font-weight: 400;
+            color: #000;
+        }
+
+        .success-note {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 320px;
+        }
+
+        .go-back-btn {
+            width: 100%;
+            max-width: 280px;
+            background-color: #fe2c55;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .go-back-btn:active {
+            background-color: #e02849;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div style="width: 24px;"></div>
+        <h1>Get Coins</h1>
+        <div class="header-icons">
+            <button class="icon-btn" onclick="showNotes()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="5" y="4" width="14" height="16" rx="2" stroke="#161823" stroke-width="2"/>
+                    <line x1="9" y1="9" x2="15" y2="9" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="9" y1="13" x2="15" y2="13" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="9" y1="16" x2="12" y2="16" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <button class="icon-btn" onclick="showHelp()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="9" stroke="#161823" stroke-width="2"/>
+                    <path d="M12 16V16.5" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 8C10.5 8 10 9 10 9.5C10 10 10.5 10.5 12 10.5C13.5 10.5 14 11.5 14 12C14 13 12.5 13.5 12 13.5" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Secure Payment Badge -->
+    <div class="secure-badge">
+        <img src="Secure payment.png" alt="Secure payment" style="max-width: 45%; height: auto;">
+    </div>
+
+    <!-- User Section -->
+    <div class="user-section">
+        <div class="avatar"></div>
+        <div class="user-info">
+            <input type="text" class="username-input" id="usernameInput" value="" placeholder="输入用户名">
+        </div>
+    </div>
+
+    <!-- Recharge Section -->
+    <div class="recharge-section">
+        <h2 class="recharge-title">Recharge</h2>
+        <div class="recharge-note">
+            Save around 25% with a lower third-party service fee.
+            <span class="info-icon">ⓘ</span>
+        </div>
+
+        <div class="coin-options">
+            <div class="coin-option selected" onclick="selectCoinOption(this, 30, 0.31)">
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">30</div>
+                <div class="coin-price">US$0.31</div>
+            </div>
+            <div class="coin-option" onclick="selectCoinOption(this, 350, 3.65)">
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">350</div>
+                <div class="coin-price">US$3.65</div>
+            </div>
+            <div class="coin-option" onclick="selectCoinOption(this, 700, 7.25)">
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">700</div>
+                <div class="coin-price">US$7.25</div>
+            </div>
+            <div class="coin-option" onclick="selectCoinOption(this, 1400, 14.49)">
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">1,400</div>
+                <div class="coin-price">US$14.49</div>
+            </div>
+            <div class="coin-option" onclick="selectCoinOption(this, 3500, 36.2)">
+                <div class="coin-amount"><img src="coin.png" alt="coin" style="width: 24px; height: 24px; vertical-align: middle;">3,500</div>
+                <div class="coin-price">US$36.2</div>
+            </div>
+            <div class="coin-option" onclick="showCustomAmount()">
+                <div class="coin-amount" style="font-size: 16px; font-weight: 600;">Custom</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invite Section -->
+    <div class="invite-section" onclick="showInviteRewards()">
+        <div class="invite-content">
+            <div class="invite-icon"><img src="clapping.png" alt="clapping" style="width: 48px; height: 48px;"></div>
+            <div class="invite-text">
+                <h3>Invite & Get Rewards</h3>
+                <p>Check out this new feature!</p>
+            </div>
+        </div>
+        <span class="arrow-right">›</span>
+    </div>
+
+    <!-- Exchange Section -->
+    <div class="exchange-section" onclick="showExchange()">
+        <div class="exchange-content">
+            <div class="exchange-title">Exchange</div>
+            <div class="exchange-balance">LIVE Gifts balance: $0.00(<img src="coin.png" alt="coin" style="width: 20px; height: 20px; vertical-align: middle;">0)</div>
+        </div>
+        <span class="arrow-right">›</span>
+    </div>
+
+    <!-- TikTok Brand -->
+    <div class="tiktok-brand"><img src="tiktok.png" alt="TikTok" style="max-width: 120px; height: auto;"></div>
+
+    <!-- Special Offer -->
+    <div class="special-offer">
+        <div class="offer-header">
+            <span class="offer-title">Special offer</span>
+            <span class="offer-cashback">Unlock 5% cashback ›</span>
+        </div>
+        <div class="payment-methods">
+            <img src="VISA.png" alt="Payment Methods" style="max-width: 80%; height: auto;">
+        </div>
+    </div>
+
+    <!-- Buy Button -->
+    <button class="buy-button" onclick="processPurchase()">
+        <img src="Shield.png" alt="shield" style="width: 24px; height: 24px; vertical-align: middle;"> Buy for US$<span id="buyPrice">0.31</span>
+    </button>
+
+    <!-- Custom Amount Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeCustomModal()"></div>
+    <div class="custom-modal" id="customModal">
+        <div class="modal-header">
+            <button class="back-btn" onclick="closeCustomModal()">‹</button>
+            <div class="modal-title">Custom</div>
+            <button class="help-btn" onclick="showModalHelp()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="9" stroke="#161823" stroke-width="2"/>
+                    <path d="M12 16V16.5" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 8C10.5 8 10 9 10 9.5C10 10 10.5 10.5 12 10.5C13.5 10.5 14 11.5 14 12C14 13 12.5 13.5 12 13.5" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="dropdown-section">
+                <div class="dropdown-label">
+                    Number of Coins
+                    <span style="font-size: 12px;">⌄</span>
+                </div>
+                <div class="coin-display">
+                    <img src="coin.png" alt="coin" style="width: 32px; height: 32px; vertical-align: middle;">
+                    <span class="coin-display-amount" id="modalCoinAmount">0</span>
+                </div>
+                <div class="price-display" id="modalPrice">US$0.00</div>
+            </div>
+
+            <div class="numpad">
+                <button class="numpad-btn" onclick="inputNumber('1')">1</button>
+                <button class="numpad-btn" onclick="inputNumber('2')">2</button>
+                <button class="numpad-btn" onclick="inputNumber('3')">3</button>
+                <button class="numpad-btn delete-btn" onclick="deleteNumber()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 5H9L4 12L9 19H20C21.1 19 22 18.1 22 17V7C22 5.9 21.1 5 20 5Z" stroke="#161823" stroke-width="2"/>
+                        <path d="M18 9L12 15M12 9L18 15" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                
+                <button class="numpad-btn" onclick="inputNumber('4')">4</button>
+                <button class="numpad-btn" onclick="inputNumber('5')">5</button>
+                <button class="numpad-btn" onclick="inputNumber('6')">6</button>
+                <button class="numpad-btn" onclick="inputNumber('000')">000</button>
+                
+                <button class="numpad-btn" onclick="inputNumber('7')">7</button>
+                <button class="numpad-btn" onclick="inputNumber('8')">8</button>
+                <button class="numpad-btn" onclick="inputNumber('9')">9</button>
+                <button class="numpad-btn" onclick="inputNumber('0')">0</button>
+            </div>
+
+            <div class="offer-section">
+                <span class="offer-label">Special offer</span>
+                <a href="#" class="cashback-link" onclick="event.preventDefault(); showCashbackInfo();">
+                    Unlock 5% cashback ›
+                </a>
+            </div>
+
+            <div class="total-section">
+                <span>Total</span>
+                <span class="total-amount" id="modalTotal">US$0.00</span>
+            </div>
+
+            <button class="modal-recharge-btn" onclick="confirmCustomRecharge()">
+                <img src="Shield.png" alt="shield" style="width: 24px; height: 24px; vertical-align: middle;"> Recharge
+            </button>
+        </div>
+    </div>
+
+    <!-- Order Summary Modal -->
+    <div class="order-summary-modal" id="orderSummaryModal">
+        <div class="order-header">
+            <button class="back-btn" onclick="closeOrderSummary()">‹</button>
+            <h2>Order summary</h2>
+            <button class="help-btn" onclick="showHelp()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="9" stroke="#161823" stroke-width="2"/>
+                    <path d="M12 16V16.5" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 8C10.5 8 10 9 10 9.5C10 10 10.5 10.5 12 10.5C13.5 10.5 14 11.5 14 12C14 13 12.5 13.5 12 13.5" stroke="#161823" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="secure-payment-badge">
+            🔒 Secure payment ›
+        </div>
+
+        <div class="order-content">
+            <div class="account-section">
+                <div class="account-row">
+                    <span class="account-label">Account</span>
+                    <div class="account-value">
+                        <div class="avatar" style="width: 24px; height: 24px;"></div>
+                        <span id="orderUsername">l0ykrn42y5</span>
+                    </div>
+                </div>
+                <div class="purchase-row">
+                    <span class="purchase-label">Purchase of <span id="orderCoinsAmount">30000</span> Coins</span>
+                    <span class="purchase-value" id="orderPrice">US$312</span>
+                </div>
+            </div>
+
+            <div class="payment-section">
+                <div class="payment-title">Payment method</div>
+                
+                <div class="payment-option" onclick="selectPaymentMethod('card')">
+                    <div class="payment-left">
+                        <div class="payment-icon-wrapper">
+                            <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
+                                <rect x="1" y="1" width="22" height="16" rx="2" stroke="#161823" stroke-width="1.5"/>
+                                <rect x="1" y="5" width="22" height="3" fill="#161823"/>
+                            </svg>
+                        </div>
+                        <span class="payment-name">Add Credit Or Debit Card</span>
+                    </div>
+                    <span style="font-size: 20px; color: #c8c8c8;">›</span>
+                </div>
+
+                <div class="payment-option" onclick="selectPaymentMethod('applepay')">
+                    <div class="payment-left">
+                        <div class="payment-icon-wrapper">
+                            <img src="apay.png" alt="Apple Pay" style="height: 16px; width: auto;">
+                        </div>
+                        <span class="payment-name">Apple Pay</span>
+                    </div>
+                    <div class="radio-btn selected" id="applePayRadio"></div>
+                </div>
+
+                <div class="payment-option" onclick="selectPaymentMethod('paypal')">
+                    <div class="payment-left">
+                        <div class="payment-icon-wrapper">
+                            <img src="paypal.png" alt="PayPal" style="height: 15px; width: auto;">
+                        </div>
+                        <span class="payment-name">PayPal</span>
+                    </div>
+                    <div class="radio-btn" id="paypalRadio"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-footer">
+            <div class="agreement-text">
+                By tapping Pay to make a purchase, you acknowledge that you are purchasing a limited licence to access this virtual item.
+            </div>
+            <div class="order-total">
+                <span>Total</span>
+                <span class="order-total-amount" id="orderTotalPrice">US$312</span>
+            </div>
+            <button class="pay-now-btn" onclick="processPayment()">
+                <img src="Shield.png" alt="shield" style="width: 24px; height: 24px; vertical-align: middle;"> Pay now
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-icon">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 20L16 28L32 12" stroke="#00c9a7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        
+        <h2 class="success-title">Successful recharge!</h2>
+        
+        <div class="success-message">
+            <span class="success-coins" id="successCoins">2,000,000</span> Coins were sent to<br>
+            <span class="success-coins" id="successUsername">mohammadm627</span>
+        </div>
+        
+        <div class="success-note">
+            This operation has been completed. It will be processed within 24 hours!
+        </div>
+        
+        <button class="go-back-btn" onclick="goBack()">Go back</button>
+    </div>
+
+    <script>
+        let selectedAmount = 30;
+        let selectedPrice = 0.31;
+        let customCoinAmount = 0; // Default custom amount
+        let selectedPaymentMethod = 'applepay'; // Default payment method
+
+        function selectCoinOption(element, amount, price) {
+            // Remove selected class from all options
+            document.querySelectorAll('.coin-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Update selected values
+            selectedAmount = amount;
+            selectedPrice = price;
+            
+            // Update buy button price
+            document.getElementById('buyPrice').textContent = price.toFixed(2);
+        }
+
+        function showCustomAmount() {
+            const overlay = document.getElementById('modalOverlay');
+            const modal = document.getElementById('customModal');
+            
+            // Show overlay first
+            overlay.style.display = 'block';
+            
+            // Trigger animation after a tiny delay
+            setTimeout(() => {
+                overlay.classList.add('show');
+                modal.classList.add('show');
+            }, 10);
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+            
+            // Update modal values
+            updateModalDisplay();
+        }
+
+        function closeCustomModal() {
+            const overlay = document.getElementById('modalOverlay');
+            const modal = document.getElementById('customModal');
+            
+            overlay.classList.remove('show');
+            modal.classList.remove('show');
+            
+            // Hide overlay after animation
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+
+        function inputNumber(num) {
+            const currentAmount = customCoinAmount.toString();
+            
+            // Limit to 9 digits
+            if (currentAmount.length >= 9 && num !== '000') {
+                return;
+            }
+            
+            if (currentAmount === '0' || customCoinAmount === 0) {
+                customCoinAmount = parseInt(num);
+            } else {
+                customCoinAmount = parseInt(currentAmount + num);
+            }
+            
+            updateModalDisplay();
+        }
+
+        function deleteNumber() {
+            const currentAmount = customCoinAmount.toString();
+            
+            if (currentAmount.length === 1) {
+                customCoinAmount = 0;
+            } else {
+                customCoinAmount = parseInt(currentAmount.slice(0, -1));
+            }
+            
+            updateModalDisplay();
+        }
+
+        function updateModalDisplay() {
+            // Format coin amount with commas
+            const formattedAmount = customCoinAmount.toLocaleString('en-US');
+            document.getElementById('modalCoinAmount').textContent = formattedAmount;
+            
+            // Calculate price (approximately $0.0104 per coin)
+            const price = (customCoinAmount * 0.0104).toFixed(2);
+            document.getElementById('modalPrice').textContent = `US$${price}`;
+            document.getElementById('modalTotal').textContent = `US$${price}`;
+        }
+
+        function confirmCustomRecharge() {
+            if (customCoinAmount === 0) {
+                alert('请输入金币数量！');
+                return;
+            }
+            
+            const username = document.getElementById('usernameInput').value;
+            
+            if (!username || username.trim() === '') {
+                alert('请先输入用户名！');
+                closeCustomModal();
+                document.getElementById('usernameInput').focus();
+                return;
+            }
+            
+            const price = (customCoinAmount * 0.0104).toFixed(2);
+            
+            // Update main page values
+            selectedAmount = customCoinAmount;
+            selectedPrice = parseFloat(price);
+            
+            // Update order summary modal with values
+            document.getElementById('orderUsername').textContent = username;
+            document.getElementById('orderCoinsAmount').textContent = customCoinAmount.toLocaleString('en-US');
+            document.getElementById('orderPrice').textContent = `US$${price}`;
+            document.getElementById('orderTotalPrice').textContent = `US$${price}`;
+            
+            // Show order summary modal (it will cover the custom modal)
+            showOrderSummary();
+        }
+
+        function showModalHelp() {
+            alert('自定义充值帮助\n\n• 使用数字键盘输入想要的金币数量\n• 最多可输入9位数字\n• 点击删除键可以删除最后一位\n• 价格会自动计算\n• 确认后点击Recharge按钮');
+        }
+
+        function showCashbackInfo() {
+            alert('5% 返现优惠\n\n使用特定支付方式可解锁5%返现：\n• 绑定信用卡/借记卡\n• 使用PayPal支付\n• 单笔充值≥$50\n\n返现将在24小时内到账');
+        }
+
+        function showOrderSummary() {
+            const modal = document.getElementById('orderSummaryModal');
+            
+            // Trigger animation
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+            
+            // Keep body scroll disabled (already disabled by custom modal)
+        }
+
+        function closeOrderSummary() {
+            const modal = document.getElementById('orderSummaryModal');
+            const customModal = document.getElementById('customModal');
+            
+            modal.classList.remove('show');
+            
+            // Also close the custom modal if it's open
+            if (customModal.classList.contains('show')) {
+                closeCustomModal();
+            } else {
+                // If custom modal is not open, just restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update radio buttons
+            const applePayRadio = document.getElementById('applePayRadio');
+            const paypalRadio = document.getElementById('paypalRadio');
+            
+            applePayRadio.classList.remove('selected');
+            paypalRadio.classList.remove('selected');
+            
+            if (method === 'applepay') {
+                applePayRadio.classList.add('selected');
+            } else if (method === 'paypal') {
+                paypalRadio.classList.add('selected');
+            } else if (method === 'card') {
+                // In a real app, this would navigate to card input page
+                alert('添加信用卡/借记卡\n\n这将打开卡片信息输入页面。\n\n请输入：\n• 卡号\n• 有效期\n• CVV\n• 持卡人姓名');
+            }
+        }
+
+        function processPayment() {
+            const username = document.getElementById('orderUsername').textContent;
+            const amount = selectedAmount;
+            const price = selectedPrice;
+            
+            // Close order summary modal
+            const orderModal = document.getElementById('orderSummaryModal');
+            orderModal.classList.remove('show');
+            
+            // Update success modal with values
+            document.getElementById('successCoins').textContent = amount.toLocaleString('en-US');
+            document.getElementById('successUsername').textContent = username;
+            
+            // Show success modal after a brief delay
+            setTimeout(() => {
+                const successModal = document.getElementById('successModal');
+                successModal.classList.add('show');
+            }, 400);
+        }
+
+        function goBack() {
+            // Close success modal
+            const successModal = document.getElementById('successModal');
+            successModal.classList.remove('show');
+            
+            // Close custom modal if open
+            const customModal = document.getElementById('customModal');
+            const modalOverlay = document.getElementById('modalOverlay');
+            customModal.classList.remove('show');
+            modalOverlay.classList.remove('show');
+            setTimeout(() => {
+                modalOverlay.style.display = 'none';
+            }, 300);
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+            
+            // Reset to default selection (30 coins)
+            selectedAmount = 30;
+            selectedPrice = 0.31;
+            document.getElementById('buyPrice').textContent = '0.31';
+            
+            // Reset custom coin amount
+            customCoinAmount = 0;
+            
+            // Reset selection UI
+            document.querySelectorAll('.coin-option').forEach((opt, index) => {
+                opt.classList.remove('selected');
+                if (index === 0) { // First option (30 coins)
+                    opt.classList.add('selected');
+                }
+            });
+            
+            // Reset payment method
+            selectedPaymentMethod = 'applepay';
+            const applePayRadio = document.getElementById('applePayRadio');
+            const paypalRadio = document.getElementById('paypalRadio');
+            applePayRadio.classList.add('selected');
+            paypalRadio.classList.remove('selected');
+        }
+
+        function copyCode() {
+            const code = 'FYKJ5GG';
+            navigator.clipboard.writeText(code).then(() => {
+                alert('代码已复制: ' + code);
+            }).catch(() => {
+                alert('复制失败');
+            });
+        }
+
+        function showNotes() {
+            alert('笔记功能\n\n这里可以查看购买记录和相关说明。');
+        }
+
+        function showHelp() {
+            alert('帮助中心\n\n• 如何购买金币？\n选择金币数量，点击购买按钮即可。\n\n• 支付方式？\n支持Visa、Mastercard、PayPal等多种支付方式。\n\n• 遇到问题？\n请联系客服获取帮助。');
+        }
+
+        function showInviteRewards() {
+            alert('邀请好友得奖励\n\n邀请好友注册并充值，您可以获得：\n• 5%的金币返现\n• 额外奖励金币\n• 专属优惠券\n\n立即分享给好友吧！');
+        }
+
+        function showExchange() {
+            alert('兑换中心\n\nLIVE礼物余额: $0.00 (coin 0)\n\n您可以将金币兑换成LIVE礼物，或将LIVE礼物余额兑换成金币。');
+        }
+
+        function processPurchase() {
+            const username = document.getElementById('usernameInput').value;
+            
+            if (!username || username.trim() === '') {
+                alert('请输入用户名！');
+                document.getElementById('usernameInput').focus();
+                return;
+            }
+
+            // Update order summary modal with values
+            document.getElementById('orderUsername').textContent = username;
+            document.getElementById('orderCoinsAmount').textContent = selectedAmount.toLocaleString('en-US');
+            document.getElementById('orderPrice').textContent = `US$${selectedPrice.toFixed(2)}`;
+            document.getElementById('orderTotalPrice').textContent = `US$${selectedPrice.toFixed(2)}`;
+            
+            // Show order summary modal directly
+            const modal = document.getElementById('orderSummaryModal');
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+            
+            // Trigger animation
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+    </script>
+</body>
+</html>
